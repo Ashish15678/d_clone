@@ -26,10 +26,10 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { DialogTrigger } from "@/components/ui/dialog";
 import { ModeToggle } from "@/app/mode-toggle/mode-toggle";
+import { useModal } from "@/hooks/use-modal-store";
 
 const formScehma = z.object({
   name: z.string().min(1, {
@@ -40,12 +40,11 @@ const formScehma = z.object({
   }),
 });
 
-export const InitialModal = () => {
-  const [isMounted, setIsMounted] = useState(false);
+export const CreateServerModal = () => {
+    const {isOpen , onClose,type} = useModal()
+
+    const isOpenModal = isOpen && type==="createServer"
   const router = useRouter();
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
   const form = useForm({
     resolver: zodResolver(formScehma),
     defaultValues: {
@@ -61,22 +60,23 @@ export const InitialModal = () => {
   try {
      axios.post("/api/servers", values);
      form.reset();
-    //  router.refresh();
-    //  window.location.reload();
+     onClose()
+     router.refresh();
+
    } catch (error) {
      console.log("ERROR in creating server: ", error);         
   }
     }
 
-    if (!isMounted) {
-      return null;
+    const handleClose = () =>{
+        form.reset()
+        onClose()
     }
 
     return (
       <>
-        <ModeToggle/>
-        <Dialog defaultOpen>
-          <DialogTrigger>Create server?</DialogTrigger>
+        <Dialog open={isOpenModal} onOpenChange={handleClose}>
+          {/* <DialogTrigger>Create server?</DialogTrigger> */}
           <DialogContent className="bg-white text-black overflow-hidden p-0">
             <DialogHeader className="pt-8 px-6">
               <DialogTitle className="text-center text-2xl font-bold">
