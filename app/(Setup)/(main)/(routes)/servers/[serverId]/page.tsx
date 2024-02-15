@@ -1,6 +1,7 @@
 const ServerIdpage = ({params}:any) =>{
      return(
         <>
+        Server
         </>
      )
 }
