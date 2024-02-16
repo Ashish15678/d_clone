@@ -28,13 +28,15 @@ export const ServerHeader = ({server,role}:ServerHeaderProps) => {
             </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56 text-xs font-medium text-black dark:text-neutral-400 space-y-[2px] ">
                     {isModerator && (
-                        <DropdownMenuItem className="px-3 py-2 text-sm text-green-300">Invite People
+                        <DropdownMenuItem onClick={()=>onOpen("invite" , {server})} className="px-3 py-2 text-sm text-green-300">
+                            Invite People
                         <UserPlus className="h-4 w-4 ml-auto"/>
                         </DropdownMenuItem>
                         
                     )}
                     {isAdmin && (
-                        <DropdownMenuItem className="px-3 py-2 text-sm cursor-pointer">Server Settings
+                        <DropdownMenuItem onClick={() => {onOpen("editServer",{server})}} className="px-3 py-2 text-sm cursor-pointer">
+                            Server Settings
                             <Settings className="ml-auto h-4 w-4" />
                         </DropdownMenuItem>
                         
