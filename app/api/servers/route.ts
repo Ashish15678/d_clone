@@ -4,12 +4,14 @@ import { memberRole } from "@prisma/client";
 
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
+import { redirect } from "next/navigation";
 
 export async function POST(req: Request) {
   try {
     const { name, imageUrl } = await req.json();
-    const profile = await currentProfile();
-    const id = "c05e47a1-bc0d-453b-988c-ddfc7dfa4839";
+    // const profile = await currentProfile();
+    const id = "dc7f5421-3958-4348-bd24-47db75b52b24";
+    // const id = await profile?.id
     // if (!profile) {
     //   return new NextResponse("Unauthorized", { status: 401 });
     // }
@@ -33,6 +35,7 @@ export async function POST(req: Request) {
       }
     });
 
+   
     return NextResponse.json(server);
   } catch (error) {
     console.log("[SERVERS_POST]", error);
